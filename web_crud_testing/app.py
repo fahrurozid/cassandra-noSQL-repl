@@ -4,7 +4,6 @@ import hvac
 import base64
 import uuid
 
-# Flask app
 app = Flask(__name__)
 
 # Cassandra configuration
