@@ -1,0 +1,34 @@
+version: "3.7"
+services:
+  cassandra-node1:
+    image: cassandra:latest
+    container_name: cassandra-node1
+    environment:
+      - CASSANDRA_CLUSTER_NAME=EncryptedCluster
+      - CASSANDRA_NUM_TOKENS=256
+      - CASSANDRA_LISTEN_ADDRESS=ip node 1
+      - CASSANDRA_SEEDS=node1 & 2
+    networks:
+      cassandra-network:
+        ipv4_address: ip node1
+    ports:
+      - "9042:9042"
+
+  cassandra-node2:
+    image: cassandra:latest
+    container_name: cassandra-node2
+    environment:
+      - CASSANDRA_CLUSTER_NAME=EncryptedCluster
+      - CASSANDRA_NUM_TOKENS=256
+      - CASSANDRA_LISTEN_ADDRESS=ip node2
+      - CASSANDRA_SEEDS=node1 & 2
+    networks:
+      cassandra-network:
+        ipv4_address: ip node2
+
+networks:
+  cassandra-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.2.23.0/24

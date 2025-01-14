@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Mahasiswa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h1>Data Mahasiswa</h1>
+
+      <!-- Insert Button -->
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal">Tambah Mahasiswa</button>
+
+      <!-- Table -->
+      <table class="table mt-3">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nama Mahasiswa</th>
+            <th>NIM</th>
+            <th>Jurusan</th>
+            <th>Prodi</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+          <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.nama_mahasiswa }}</td>
+            <td>{{ row.nim }}</td>
+            <td>{{ row.jurusan }}</td>
+            <td>{{ row.prodi }}</td>
+            <td>
+              <!-- Edit Button -->
+              <a href="{{ url_for('edit', id=row.id) }}" class="btn btn-warning btn-sm">Edit</a>
+              <!-- Delete Button -->
+              <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ row.id }}">Delete</button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Insert Modal -->
+    <div class="modal fade" id="insertModal" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="{{ url_for('insert') }}" method="POST">
+            <div class="modal-header">
+              <h5 class="modal-title" id="insertModalLabel">Tambah Mahasiswa</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="nama_mahasiswa" class="form-label">Nama Mahasiswa</label>
+                <input type="text" class="form-control" id="nama_mahasiswa" name="nama_mahasiswa" required />
+              </div>
+              <div class="mb-3">
+                <label for="nim" class="form-label">NIM</label>
+                <input type="number" class="form-control" id="nim" name="nim" required />
+              </div>
+              <div class="mb-3">
+                <label for="jurusan" class="form-label">Jurusan</label>
+                <input type="text" class="form-control" id="jurusan" name="jurusan" required />
+              </div>
+              <div class="mb-3">
+                <label for="prodi" class="form-label">Prodi</label>
+                <input type="text" class="form-control" id="prodi" name="prodi" required />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Tambah</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="" method="POST" id="deleteForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Apakah Anda yakin ingin menghapus data ini?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-danger">Hapus</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const deleteButtons = document.querySelectorAll('button[data-bs-target="#deleteModal"]');
+      const deleteForm = document.getElementById("deleteForm");
+
+      deleteButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const id = this.getAttribute("data-id");
+          deleteForm.action = `/delete/${id}`;
+        });
+      });
+    </script>
+  </body>
+</html>

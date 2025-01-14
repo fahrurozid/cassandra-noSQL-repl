@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Mahasiswa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h1>Update Mahasiswa</h1>
+      <form action="{{ url_for('update', id=row.id) }}" method="POST">
+        <div class="mb-3">
+          <label for="nama_mahasiswa" class="form-label">Nama Mahasiswa</label>
+          <input type="text" class="form-control" id="nama_mahasiswa" name="nama_mahasiswa" value="{{ row.nama_mahasiswa }}" required />
+        </div>
+        <div class="mb-3">
+          <label for="nim" class="form-label">NIM</label>
+          <input type="number" class="form-control" id="nim" name="nim" value="{{ row.nim }}" required />
+        </div>
+        <div class="mb-3">
+          <label for="jurusan" class="form-label">Jurusan</label>
+          <input type="text" class="form-control" id="jurusan" name="jurusan" value="{{ row.jurusan }}" required />
+        </div>
+        <div class="mb-3">
+          <label for="prodi" class="form-label">Prodi</label>
+          <input type="text" class="form-control" id="prodi" name="prodi" value="{{ row.prodi }}" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+      </form>
+      <a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Kembali</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
