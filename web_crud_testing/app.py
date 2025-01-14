@@ -13,7 +13,7 @@ session = cluster.connect()
 session.set_keyspace('my_keyspace')  
 
 # Vault configuration
-vault_client = hvac.Client(url='http://localhost:8200', token='vault token')  # Ganti dengan token Anda
+vault_client = hvac.Client(url='http://localhost:8200', token='<vault token>')  
 
 # Encryption function
 def encrypt_data(plaintext):
